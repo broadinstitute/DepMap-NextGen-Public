@@ -35,22 +35,23 @@ Below is a manifest of files included in this directory.
 
 ## Scripts
 
+- `Fig3bc_EDFig6ab_GBM_celligner_transcriptional_analysis.R`
+- `Fig3d_EDFig6c_GBM_GSEA.R`
+
 # Section 3
 
 ## Scripts
 
-- `EDFig11a_pdacc_associated_dep_wnt3a.R`
-- `EDFig11c_wnt_dependency_mut_association.R`
-- `EDFig12ac_2d3d_onctsg_dependency.R`
-- `EDFig5a_cns2d3d_expression_dendrogram.R`
-- `EDFig5d_cds2d3d_expression_volcano.R`
-- `EDFig6b_cnsorg2d3d_dependency_volcano.R`
-- `EDFig8e_glial_nextgen_diff_dependency.R`
-- `EDFig8f_cdk6dep_mut_association.R`
-- `EDFig8g_cdk6dep_cn_association_glial.R`
-- `Fig3bc_EDFig6ab_GBM_celligner_transcriptional_analysis.R`
-- `Fig3d_EDFig6c_GBM_GSEA.R`
-- `Fig3d_glial_mesenchymal_diff_dependency.R`
-- `Fig3f_cdk6dep_cn_association.R`
-- `FigR13d_cdk6dep_cdkn2acn_per_lineage.R`
-- `FigR9a_depmap_han_2d3d_screens.R`
+- `EDFig11a_pdacc_associated_dep_wnt3a.R`: Computes correlations with PDAC-classical expression among the models grown with Wnt3a
+- `EDFig11c_wnt_dependency_mut_association.R`: Computes Wilcoxon rank-sum tests for dependency of Wnt-related genes on genomic alterations
+- `EDFig12ac_2d3d_onctsg_dependency.R`: Computes differential dependency across growth formats for oncogenes and tumor suppressor genes
+- `EDFig5a_cns2d3d_expression_dendrogram.R`: Clusters model gene expression across growth formats
+- `EDFig5d_cds2d3d_expression_volcano.R`: Plots differential model gene expression across growth formats
+- `EDFig6b_cnsorg2d3d_dependency_volcano.R`: Computes differential dependencies across growth formats for CNS models
+- `EDFig8e_glial_nextgen_diff_dependency.R`: Computes differential dependencies between glial GBMs and other NextGen models
+- `EDFig8f_cdk6dep_mut_association.R`: Computes CDK6 dependency associations with genomic alterations
+- `EDFig8g_cdk6dep_cn_association_glial.R`: Plots correlations between CDK6 dependency and copy number alterations in glial models
+- `Fig3d_glial_mesenchymal_diff_dependency.R`: Computes differential dependency between glial and mesenchymal GBM models
+- `Fig3f_cdk6dep_cn_association.R`: Plots correlations between CDK6 dependency and copy number alterations in all GBM models
+- `FigR13d_cdk6dep_cdkn2acn_per_lineage.R`: Plots CDK6 dependency in relation to CNS subtype and genomic alterations in CDKN2A
+- `FigR9a_depmap_han_2d3d_screens.R`: Clusters the aggregate gene effect scores in different culture conditions DepMap NextGen models and Han et al., 2020
