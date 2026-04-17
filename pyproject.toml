@@ -31,7 +31,6 @@ dependencies = [
     "fsspec (>=2025.10.0,<2026.0.0)",
     "gcsfs (>=2025.10.0,<2026.0.0)",
     "gumbo-rest-client (>=2.0.7,<3.0.0)",
-    "cds @ git+https://github.com/broadinstitute/cdspy.git",
 ]
 
 [build-system]

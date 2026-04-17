@@ -487,30 +487,6 @@ files = [
 ]
 
 [[package]]
-name = "cds"
-version = "1.3.4"
-description = "CDS Python tools"
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = []
-develop = false
-
-[package.dependencies]
-h5py = "*"
-matplotlib = "*"
-numpy = "*"
-pandas = "*"
-scipy = "*"
-taigapy = "*"
-
-[package.source]
-type = "git"
-url = "https://github.com/broadinstitute/cdspy.git"
-reference = "HEAD"
-resolved_reference = "510986bac3998db4bb9297e28f1390b3b393f78c"
-
-[[package]]
 name = "certifi"
 version = "2025.1.31"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -5878,4 +5854,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11, <3.12"
-content-hash = "610a12dc2c945839b3b0268098bf0ed5c77b709217bcca3f1fdecb158b11a231"
+content-hash = "8fcaadfefb21a1bf65b4719f16f697ebd777b3581445740de16db8cd3af8788a"
