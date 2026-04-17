@@ -44,7 +44,6 @@ def print_combined_enrichment(top_n_each=200):
     print('OR:', combined_adhesion_test.odds_ratio)
     print('p-value:', combined_adhesion_test.pval)
 
-# figure ED10e
 
 def plot_geneset_similarity_matrix():
     """
@@ -59,10 +58,8 @@ def plot_geneset_similarity_matrix():
         xticklabels=False,
         cbar_kws={'label': 'Overlap coefficient'}
     )
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_ED12e_organoids_vs_2d_geneset_similarity.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'organoids_vs_2d_geneset_similarity.pdf'))
     
-# figure 5a
-
 def plot_geneset_stemplot():
     """
     Plot the enrichment of genesets within the tails of the distribution of dependency differences between
@@ -126,10 +123,8 @@ def plot_geneset_stemplot():
     plt.yticks(range(len(org_2d_diff_geneset_df)), org_2d_diff_geneset_df.sort_values('FDR')['clean_term'].tolist(), fontdict={'size': TICK_SIZE})
     plt.xlabel('Odds Ratio', fontdict={'size': LABEL_SIZE})
     plt.xticks(plt.gca().get_xticks()[:-1], labels=plt.gca().get_xticklabels()[:-1], fontdict={'size': TICK_SIZE})
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_5a_organoid_vs_2d_geneset_enrichment_stemplot.pdf'))
-    
-# figure 5b
-    
+    plt.savefig(os.path.join(FIGURE_DIR, 'organoid_vs_2d_geneset_enrichment_stemplot.pdf'))
+        
 def plot_global_volcano_plot(manual_annotate=MANUAL_ANNOTATE):
     """
     Plot the mean difference in dependency between Organoid and Traditional adherent models, colored by geneset cluster
@@ -215,7 +210,7 @@ def plot_global_volcano_plot(manual_annotate=MANUAL_ANNOTATE):
             handles.append(handle)    
     plt.legend(handles = handles, ncol=2, handletextpad=0, columnspacing=0.5, loc='upper right', prop={'size': ANNOT_SIZE})
 
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_5b_organoid_vs_2d_dependency_volcano.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'organoid_vs_2d_dependency_volcano.pdf'))
     
 
 def main():
@@ -224,13 +219,10 @@ def main():
     """
     print_combined_enrichment()
     
-    # figure ED12e
     plot_geneset_similarity_matrix()
     
-    # figure 5a
     plot_geneset_stemplot()
     
-    # figure 5b
     plot_global_volcano_plot(manual_annotate=MANUAL_ANNOTATE)
 
     

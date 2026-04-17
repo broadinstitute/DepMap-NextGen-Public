@@ -1,0 +1,25 @@
+text.usetex : False
+font.family : sans-serif
+font.sans-serif : Arial
+font.size : 6
+axes.titlesize : 7
+axes.labelsize : 6
+pdf.fonttype : 42
+
+figure.dpi : 450
+
+xtick.labelsize : 5
+ytick.labelsize : 5
+
+xtick.major.pad : 1
+xtick.major.size : 2
+xtick.major.width : 0.5
+xtick.minor.pad : 0.8
+xtick.minor.size : 1.5
+xtick.minor.width : 0.4
+ytick.major.pad : 1
+ytick.major.size : 2
+ytick.major.width : 0.5
+ytick.minor.pad : 0.8
+ytick.minor.size : 1.5
+ytick.minor.width : 0.4

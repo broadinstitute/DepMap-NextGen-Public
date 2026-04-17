@@ -12,8 +12,6 @@ mpl.style.use(os.path.join(ASSETS_DIR, 'stylesheet.mplstyle'))
 
 MANUAL_ANNOTATE = True
 
-# figure 4d
-
 def plot_pdac_volcano(fdr_threshold=0.05, wnt_color='darkturquoise', highlight_color='#f87060', manual_annotate=MANUAL_ANNOTATE):
     """
     Plot correlations for dependencies against the expression of the PDAC-Classical program (from Gavish et al., 2023), and
@@ -119,9 +117,7 @@ def plot_pdac_volcano(fdr_threshold=0.05, wnt_color='darkturquoise', highlight_c
     axs[2].set_xticks(axs[2].get_xticks()[1:-1], labels=axs[2].get_xticklabels()[1:-1], fontdict={'size': TICK_SIZE})
 
     axs[0].set_title('PDAC-classical/EED\nAssociated Dependencies', fontdict={'size': TITLE_SIZE})
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_4d_organoid_pdac_classical_dependency_volcano.pdf'))
-
-# figure 4e
+    plt.savefig(os.path.join(FIGURE_DIR, 'organoid_pdac_classical_dependency_volcano.pdf'))
 
 def plot_wnt_regressions(wnt_genes_to_regress):
     """
@@ -172,9 +168,8 @@ def plot_wnt_regressions(wnt_genes_to_regress):
 
     axs[1].set_ylabel(f'Dependency', fontdict={'fontsize': LABEL_SIZE}, x=0.05, y=-0.15)
 
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_4e_pdac_classical_wnt_scatterplots.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'pdac_classical_wnt_scatterplots.pdf'))
 
-# figure 4f
 
 def plot_wnt_densities(wnt_genes_to_regress):
     """
@@ -226,7 +221,7 @@ def plot_wnt_densities(wnt_genes_to_regress):
     axs[0].text(-0.7, 0.75, 'Organoid', fontdict={'size': ANNOT_SIZE, 'color': sample_set_palette['DepMap Organoid']}, ha='right')
     axs[0].text(0.5, 0.75, '2D', fontdict={'size': ANNOT_SIZE, 'color': sample_set_palette['DepMap 2D']}, ha='left')
     
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_4f_wnt_dependency_densities.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'wnt_dependency_densities.pdf'))
     
 
 
@@ -234,13 +229,10 @@ def main():
     """
     Generate all plots related to dependencies associated with PDAC-classical expression
     """
-    # figure 4d
     plot_pdac_volcano(fdr_threshold=0.05, manual_annotate=MANUAL_ANNOTATE)
     
-    # figure 4e
     plot_wnt_regressions(['MESD (23184)', 'WLS (79971)', 'TCF7L2 (6934)', 'FZD5 (7855)'])
     
-    # figure 4f
     plot_wnt_densities(['MESD (23184)', 'WLS (79971)', 'TCF7L2 (6934)', 'FZD5 (7855)'])
 
     

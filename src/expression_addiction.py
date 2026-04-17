@@ -12,8 +12,6 @@ mpl.style.use(os.path.join(ASSETS_DIR, 'stylesheet.mplstyle'))
 
 MANUAL_ANNOTATE = True
 
-# figure 2a
-
 def plot_expression_addiction_volcano(fdr_threshold=0.005, correlation_threshold=0.3, manual_annotate=MANUAL_ANNOTATE):
     """
     Plot correlation results for expression addiction dependencies.
@@ -94,10 +92,8 @@ def plot_expression_addiction_volcano(fdr_threshold=0.005, correlation_threshold
 
     plt.legend(handles=handles, handletextpad=0, prop={'size': ANNOT_SIZE}, loc='upper right')
     plt.tight_layout()
-    plt.savefig(os.path.join(FIGURE_DIR, f'Fig_2a_next_gen_expression_addiction_volcano.pdf'))
-    
-# figure 2b
-    
+    plt.savefig(os.path.join(FIGURE_DIR, f'next_gen_expression_addiction_volcano.pdf'))
+        
 def plot_expression_addiction_enrichment_barplots():
     """
     Plot stacked barplots for enrichment of oncogenes and transcription factors within the class of expression addiction dependencies
@@ -164,9 +160,7 @@ def plot_expression_addiction_enrichment_barplots():
     axs[1].text(1, 1 - (tf_crosstab_pct_df.loc['True', 'False'] / 2) - LABEL_VERTICAL_ADJUST, tf_crosstab_df.loc['True', 'False'], 
                 ha='center', va='center', fontdict={'color': 'black', 'fontsize': ANNOT_SIZE})
     offset_x_labels(fig, axs[1], 25, 0)
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_2b_next_gen_expr_addiction_enrichment_barplot.pdf'))
-
-# figure 2c
+    plt.savefig(os.path.join(FIGURE_DIR, 'next_gen_expr_addiction_enrichment_barplot.pdf'))
 
 def plot_expression_addiction_example(dep, x_range=None, y_range=None):
     """
@@ -307,7 +301,7 @@ def plot_expression_addiction_example(dep, x_range=None, y_range=None):
         axs[1].text(0.1, 0.05, 'r = {:.2f}'.format(adherent_r), 
                     fontdict={'fontsize': ANNOT_SIZE}, ha='left', transform=axs[1].transAxes)
 
-    plt.savefig(os.path.join(FIGURE_DIR, f'Fig_2c_{dep}_expr_addiction_example.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, f'{dep}_expr_addiction_example.pdf'))
     
     example_summary_df = pd.concat([
         next_gen_example_df.assign(ScreenSet='NextGen'),
@@ -319,13 +313,10 @@ def main():
     """
     Generate all plots related to expressino addictions
     """
-    # figure 2a
     plot_expression_addiction_volcano(fdr_threshold=0.005, correlation_threshold=0.3, manual_annotate=MANUAL_ANNOTATE)
     
-    # figure 2b
     plot_expression_addiction_enrichment_barplots()
 
-    # figure 2c
     plot_expression_addiction_example('HNRNPH1', x_range=[6, 8, 10], y_range=[-4, -3, -2, -1, 0])
     plot_expression_addiction_example('ESR1', x_range=[0, 2, 4, 6], y_range=[-2, -1, 0, 1])
     

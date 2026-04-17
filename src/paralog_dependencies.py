@@ -10,8 +10,6 @@ import matplotlib.pyplot as plt
 
 mpl.style.use(os.path.join(ASSETS_DIR, 'stylesheet.mplstyle'))
 
-# figure 2d
-
 def plot_paralog_dependency_volcano(highlight_point=None, highlight_color='#f87060', fdr_threshold=0.005, correlation_threshold=0.3):
     """
     Plot correlation resluts for paralog dependencies
@@ -96,9 +94,8 @@ def plot_paralog_dependency_volcano(highlight_point=None, highlight_color='#f870
     plt.legend(handles=handles, handletextpad=0, prop={'size': ANNOT_SIZE}, loc='upper left')
     
     plt.tight_layout()
-    plt.savefig(os.path.join(FIGURE_DIR, f'Fig_2d_next_gen_paralog_expression_dependencies.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, f'next_gen_paralog_expression_dependencies.pdf'))
 
-# figure 2e
 
 def plot_paralog_example(dep, feat):
     """
@@ -225,7 +222,7 @@ def plot_paralog_example(dep, feat):
     axs[1].text(0.97, 0.05, 'r = {:.2f}'.format(next_gen_paralog_dependency_volcano_df.set_index('label').loc[dep + '/' + feat, 'TraditionalPearsonR']), 
                 fontdict={'fontsize': ANNOT_SIZE}, ha='right', transform=axs[1].transAxes)
 
-    plt.savefig(os.path.join(FIGURE_DIR, f'Fig_2e_{dep}_{feat}_paralog_example.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, f'{dep}_{feat}_paralog_example.pdf'))
     
     example_summary_df = pd.concat([
         next_gen_example_df.assign(ScreenSet='NextGen'),
@@ -238,10 +235,8 @@ def main():
     """
     Generate plots related to dependencies associated with expression of their paralog
     """
-    # figure 2d
     plot_paralog_dependency_volcano(highlight_point="ENO1/ENO2", highlight_color='#f87060', fdr_threshold=0.005, correlation_threshold=0.3)
     
-    # figure 2e
     plot_paralog_example('ENO1', 'ENO2')
     
 

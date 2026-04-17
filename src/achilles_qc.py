@@ -26,7 +26,6 @@ def load_data():
     
     return ngs, ness, ess, screen_dict, screen_qc_table, screen_metadata, screen_gene_effect
 
-# figure 1g
 
 def plot_control_separations(ngs, screen_dict, ness, ess):
     """
@@ -122,12 +121,11 @@ def plot_control_separations(ngs, screen_dict, ness, ess):
 
     axs[-1].set_xlabel('Mean Naive Gene Effect')
 
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_1g_average_nnmd_components_4cat.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'average_nnmd_components_4cat.pdf'))
     pd.concat(ngs_controls_longform, axis=0).reset_index().rename({
         'level_0': 'Group'
     }, axis=1).drop('level_1', axis=1).to_csv(os.path.join(PROCESSED_DIR, 'average_nnmd_components_4cat.csv'), index=False)
     
-# figure ED4ab
     
 def plot_qc_metrics(screen_qc_table):
     """
@@ -168,7 +166,7 @@ def plot_qc_metrics(screen_qc_table):
     plt.ylabel('Screen NNMD', fontdict={'size': LABEL_SIZE})
     plt.gca().tick_params(axis='x', which='both',length=0, pad=3)
     plt.yticks(plt.yticks()[0][2:-2:2], labels=[y.get_text() for y in plt.yticks()[1][2:-2:2]], fontdict={'size': TICK_SIZE})
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_ED4ab_crispr_screen_nnmds.pdf'), bbox_inches='tight')
+    plt.savefig(os.path.join(FIGURE_DIR, 'crispr_screen_nnmds.pdf'), bbox_inches='tight')
     
     # ROC-AUCs
     plt.figure(figsize=(80 * mm, 59 * mm))
@@ -194,10 +192,8 @@ def plot_qc_metrics(screen_qc_table):
     plt.ylabel('Screen ROC-AUC', fontdict={'size': LABEL_SIZE})
     plt.gca().tick_params(axis='x', which='both',length=0, pad=3)
     plt.yticks(plt.yticks()[0][1:-1:2], labels=[y.get_text() for y in plt.yticks()[1][1:-1:2]], fontdict={'size': TICK_SIZE})
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_ED4ab_crispr_screen_rocaucs.pdf'), bbox_inches='tight')
+    plt.savefig(os.path.join(FIGURE_DIR, 'crispr_screen_rocaucs.pdf'), bbox_inches='tight')
     
-# figure 1i
-
 def plot_library_correction_examples(screen_metadata, ngs, screen_gene_effect):
     """
     Plots gene effect scores at successive stages of normalization.
@@ -256,7 +252,7 @@ def plot_library_correction_examples(screen_metadata, ngs, screen_gene_effect):
     plt.xticks([-5, 0], [-5, 0], fontdict={'size': TICK_SIZE})
     plt.yticks([-5, 0], [-5, 0], fontdict={'size': TICK_SIZE})
     plt.tight_layout()
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_1i_normalization_example_naive.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'normalization_example_naive.pdf'))
 
     # library-corrected gene effects
     plt.figure(figsize=(24 * mm, 24 * mm))
@@ -280,7 +276,7 @@ def plot_library_correction_examples(screen_metadata, ngs, screen_gene_effect):
     plt.xticks([-5, 0], [-5, 0], fontdict={'size': TICK_SIZE})
     plt.yticks([-5, 0], [-5, 0], fontdict={'size': TICK_SIZE})
     plt.tight_layout()
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_1i_normalization_example_final.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'normalization_example_final.pdf'))
     
     
 def main():
@@ -289,13 +285,10 @@ def main():
     """
     ngs, ness, ess, screen_dict, screen_qc_table, screen_metadata, screen_gene_effect = load_data()
     
-    # figure 1g
     plot_control_separations(ngs, screen_dict, ness, ess)
     
-    # figure ED3ab
     plot_qc_metrics(screen_qc_table)
     
-    # figure 1i
     plot_library_correction_examples(screen_metadata, ngs, screen_gene_effect)
 
 

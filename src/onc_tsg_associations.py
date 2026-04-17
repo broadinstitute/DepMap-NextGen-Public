@@ -10,8 +10,6 @@ import matplotlib.pyplot as plt
 
 mpl.style.use(os.path.join(ASSETS_DIR, 'stylesheet.mplstyle'))
 
-# figure 2f
-
 def plot_onc_tsg_volcano(fdr_threshold=0.05, mean_difference_threshold=0.3):
     """
     Plot a scatterplot of dependencies related to oncogene or tumor suppressor alterations.
@@ -73,7 +71,7 @@ def plot_onc_tsg_volcano(fdr_threshold=0.05, mean_difference_threshold=0.3):
     plt.title('Oncogene GOF and\nTumor Suppressor LOF', fontdict={'size': TITLE_SIZE})
     plt.legend(loc='upper right', handletextpad=0, prop={'size': ANNOT_SIZE})
 
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_2f_next_gen_onc_tsg_dependency_volcano_plot.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'next_gen_onc_tsg_dependency_volcano_plot.pdf'))
     
 def create_paired_violin_plot(label, onc_gof_altered_mtx, tsg_lof_altered_mtx, screen_gene_effect, screen_metadata, next_gen_screen_list, adherent_screen_list, next_gen_onc_tsg_test_df, ax_map_panel):
     """
@@ -228,8 +226,6 @@ def create_paired_violin_plot(label, onc_gof_altered_mtx, tsg_lof_altered_mtx, s
     ], axis=1).reset_index().rename({'index': 'ScreenID'}, axis=1)
     return example_summary_df.dropna()    
 
-# figure 2g
-
 def plot_example_panel(examples, 
                        figsize=(80 * mm, 50 * mm), 
                        column_ratios=[1, 1], column_widthspace=0.5):
@@ -280,10 +276,8 @@ def plot_example_panel(examples,
         example_df = create_paired_violin_plot(ex, onc_gof_altered_mtx, tsg_lof_altered_mtx, screen_gene_effect, screen_metadata, next_gen_screens, adherent_screens, next_gen_onc_tsg_dependency_volcano_df, ax)
         example_summary_df.append(example_df)
 
-    plt.savefig(os.path.join(FIGURE_DIR, f'Fig_2g_onc_tsg_dependency_3_examples.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, f'onc_tsg_dependency_3_examples.pdf'))
     pd.concat(example_summary_df, axis=0).replace(lineage_replacement).to_csv(os.path.join(PROCESSED_DIR, 'onc_tsg_dependency_3_examples_table.csv'), index=False)
-
-# figure 2h
 
 def plot_onc_tsg_alteration_example(dep, feat):
     """
@@ -384,7 +378,7 @@ def plot_onc_tsg_alteration_example(dep, feat):
     ]
     plt.legend(handles=handles, handletextpad=0, prop={'size': ANNOT_SIZE}, loc='upper right')
     
-    plt.savefig(os.path.join(FIGURE_DIR, f'Fig_2h_{dep}_{feat}_cn_alteration_example.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, f'{dep}_{feat}_cn_alteration_example.pdf'))
     
     # save table with values underlying the plot
     example_summary_df = pd.concat([
@@ -398,13 +392,10 @@ def main():
     """
     Generate all plots related to dependencies associated with the presence of mutations in oncogenes or tumor suppressors
     """
-    # figure 2f
     plot_onc_tsg_volcano(fdr_threshold=0.05, mean_difference_threshold=0.3)
     
-    # figure 2g
     plot_example_panel(["KRAS/KRAS", "SCD/KRAS"])
 
-    # figure 2h
     plot_onc_tsg_alteration_example('SCD', 'KRAS')
     
 

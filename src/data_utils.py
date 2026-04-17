@@ -9,19 +9,9 @@ import statsmodels.api as sm
 import statsmodels.formula.api as smf
 
 from tqdm import tqdm
-
 from constants import *
 
 ##### File ingestion #####
-
-FIGSHARE_AUTH_TOKEN = pd.read_csv(os.path.join(ASSETS_DIR, 'figshare_token.txt')).columns.tolist()[0] # for programmatic access to private figshare data
-api_call_headers = {'Authorization': f'token {FIGSHARE_AUTH_TOKEN}'}
-
-FIGSHARE_FILE_MAP = {
-    ### Should be loaded into the PROCESSED_DIR folder ###
-    #"filename": "token",
-  
-}
 
 FULL_MATRIX_MAP = {
     'expression': ['traditional_expression.csv', 'next_gen_expression.csv'],
@@ -31,35 +21,109 @@ FULL_MATRIX_MAP = {
     'omics_signatures': ['traditional_omics_signatures.csv', 'next_gen_omics_signatures.csv']
 }
 
-def download_file_from_figshare(filename, local_dir=INPUT_DIR):
-    '''
-    Download a file from figshare into the local data folder
-    '''
-    html = "https://ndownloader.figshare.com/files/"
-    file_num = FIGSHARE_FILE_MAP[filename]
-    r = requests.get(f'https://ndownloader.figshare.com/files/{file_num}', allow_redirects=True, headers=api_call_headers)
-    
-    if r.status_code != 200:
-        print('Error:', r.content)
-    else:
-        print(f"Downloading {filename} from {html}{file_num}...")
-        with open(os.path.join(local_dir, filename), 'wb') as f:
-            for chunk in r.iter_content(1024):
-                f.write(chunk)
-        print(f'Saved to {os.path.join(local_dir, filename)}')
-        
-    return os.path.join(local_dir, filename)
-
 def load_file(filename, local_dir=INPUT_DIR, **kwargs):
     '''
     Read a file in from a local data folder, and pull it from figshare if absent
     '''
     if filename not in os.listdir(local_dir):
-        filepath = download_file_from_figshare(filename, local_dir=local_dir)
+        print(f"{filename} is missing")
     else:
         filepath = os.path.join(local_dir, filename)
     table = pd.read_csv(filepath, **kwargs)
     return table
+
+# function to resolve gene identity crises
+hgnc_annotations = load_file('hgnc_table.csv')
+hgnc_annotations["cds_gene_id"] = hgnc_annotations["cds_gene_id"].astype(str)
+def remap_genes(gene_tag_list, global_id_mapping=hgnc_annotations[['symbol', 'entrez_id', 'alias_symbol', 'prev_symbol', 'cds_gene_id']], 
+                id_column='entrez_id', symbol_column='symbol', output_column='cds_gene_id', alternative_symbol_columns=['alias_symbol', 'prev_symbol'],
+                allow_duplicated_out=False, preserve_unmapped=True):
+    '''
+    Ingests a list of CDS-formatted gene tags, expected to be "<HGNC Symbol> (<Entrez ID>)", but will also 
+    accept only symbols. Then maps the genes to the current stable names according to the provided gene table. 
+    Matches genes in order of Entrez ID, followed by HGNC symbol, then by any of the alternative symbols.
+    '''
+    
+    assert output_column in global_id_mapping.columns.tolist(), f'"`{output_column}`" not found in `global_id_mapping`, please specify an output format'
+    global_id_mapping = global_id_mapping.copy()
+    
+    # if the desired output is one of the inputs, this resolves the problem of duplicated columns
+    if output_column in [id_column, symbol_column]:
+        _output_column = '_' + output_column
+        global_id_mapping[_output_column] = global_id_mapping[output_column]
+    else:
+        _output_column = output_column
+    
+    # process the ground truth labels and summarize
+    ground_truth_mapping = []
+    print('Processing the ground truth mapping...')
+    print(f'Aligning `{output_column}` using `{id_column}` and `{symbol_column}`...')
+    ground_truth_mapping.append(global_id_mapping[[symbol_column, id_column, _output_column]].dropna())
+    for alt_sym_col in alternative_symbol_columns:
+        if alt_sym_col in global_id_mapping.columns.tolist():
+            print(f'Supplementing additional symbols from `{alt_sym_col}`...')
+            map_supplement = global_id_mapping[[alt_sym_col, id_column, _output_column]].dropna().rename({alt_sym_col: symbol_column}, axis=1)
+            map_supplement[symbol_column] = map_supplement[symbol_column].str.split('|')
+            map_supplement = map_supplement.explode(symbol_column)
+            ground_truth_mapping.append(map_supplement)
+    ground_truth_mapping = pd.concat(ground_truth_mapping, axis=0, ignore_index=True).drop_duplicates(subset=[symbol_column], keep='first')
+    print(f'Found {len(ground_truth_mapping[symbol_column].unique())} unique entries for `{symbol_column}` mapping to {len(ground_truth_mapping[id_column].unique())} unique entries for `{id_column}`')
+    
+    # for the inputs, split on whitespace and interpret the components as symbol and id
+    print('Processing the inputs...')
+    mapping_to_fix = pd.DataFrame({
+        'input_tag': gene_tag_list,
+        'input_symbol': [x.split(' ')[0] for x in gene_tag_list],
+        'input_id': [x.split(' ')[1].strip('()') if ' ' in x else 'Unknown' for x in gene_tag_list]
+    })
+    mapping_to_fix['input_id'] = mapping_to_fix['input_id'].replace({'Unknown': np.nan}).astype(float)
+    
+    output_mappings = []
+
+    to_fix_by_id = mapping_to_fix[~mapping_to_fix['input_id'].isna()]
+    to_fix_by_symbol = []
+    to_fix_by_symbol.append(mapping_to_fix[mapping_to_fix['input_id'].isna()])
+    
+    # attempt to resolve genes with ids first
+    if len(to_fix_by_id) > 0:
+        to_fix_by_id = to_fix_by_id.merge(ground_truth_mapping[[id_column, _output_column]].drop_duplicates(), 
+                                          left_on='input_id', right_on=id_column, how='left').drop(id_column, axis=1)
+        mapped_by_id = to_fix_by_id[~to_fix_by_id[_output_column].isna()]
+        output_mappings.append(mapped_by_id)
+        print(f'Mapped {(len(mapped_by_id) / len(mapping_to_fix)) * 100 :.02f}% of inputs by `{id_column}`...')
+        
+        # send the genes that failed id matching to the symbol matching inputs
+        unmapped = to_fix_by_id[to_fix_by_id[_output_column].isna()].drop(_output_column, axis=1)
+        if len(unmapped) > 0:
+            to_fix_by_symbol.append(unmapped)
+            print(f'Attempting to map the remainder by `{symbol_column}`...')
+
+    # resolve the remaining genes with symbols
+    if len(to_fix_by_symbol) > 0:
+        to_fix_by_symbol = pd.concat(to_fix_by_symbol, axis=0)
+        to_fix_by_symbol = to_fix_by_symbol.merge(ground_truth_mapping[[symbol_column, _output_column]].drop_duplicates(), 
+                                                  left_on='input_symbol', right_on=symbol_column, how='left').drop(symbol_column, axis=1)
+        mapped_by_symbol = to_fix_by_symbol[~to_fix_by_symbol[_output_column].isna()]
+        output_mappings.append(mapped_by_symbol)
+        print(f'Mapped {(len(mapped_by_symbol) / len(mapping_to_fix)) * 100 :.02f}% of inputs by `{symbol_column}`...')
+        
+        # remaining genes have failed all mapping attempts, summarize below
+        unmapped = to_fix_by_symbol[to_fix_by_symbol[_output_column].isna()]
+        
+    print(f'{(len(unmapped) / len(mapping_to_fix)) * 100 :.02f}% of inputs remain unmapped')
+    if len(unmapped) > 0:
+        print('\t Unmapped inputs: {}'.format(', '.join(unmapped['input_tag'].tolist())))
+    
+    output_mappings = pd.concat(output_mappings, axis=0, ignore_index=True)
+    if not allow_duplicated_out: # keep only the first instance of duplicate output ids
+        output_mappings = output_mappings.drop_duplicates(subset=_output_column, keep='first')
+    if preserve_unmapped: # for unmapped genes, keep them in the output mapping in their input forms
+        output_mappings = pd.concat([
+            output_mappings,
+            pd.DataFrame({'input_tag': unmapped['input_tag'].tolist(), _output_column: unmapped['input_tag'].tolist()})
+        ], axis=0)
+    
+    return output_mappings.set_index('input_tag')[_output_column]
 
 def load_full_matrix(full_matrix_name):
     '''

@@ -331,8 +331,8 @@ def compute_geneset_scores():
     Calculates selected gene set expression scores for TCGA samples and DepMap models
     """
     # Celligner data - import and map the gene ids to the right format
-    celligner_coordinates = load_file('celligner_coordinates_w_hcmi_filtered.csv', index_col=0)
-    tumor_expression = load_file('celligner_corrected_expr_w_hcmi_filtered.csv.gz', compression='gzip', index_col=0)
+    celligner_coordinates = load_file('celligner_coordinates_w_hcmi.csv', index_col=0)
+    tumor_expression = load_file('celligner_corrected_expr_w_hcmi.csv.gz', compression='gzip', index_col=0)
     omics_models_meta = load_file('model_metadata.csv', index_col=0)
     expr = load_full_matrix('expression')
     geneset_table = load_file('geneset_table_updated.csv')
@@ -563,9 +563,9 @@ def run_celligner_classification():
     Classify model lineages based on the lineage of origin for their most similar TCGA samples
     """
     # Celligner data - import and map the gene ids to the right format
-    celligner_distance_matrix = load_file('celligner_distance_matrix_w_hcmi_filtered.csv', index_col=0)
+    celligner_distance_matrix = load_file('celligner_distance_matrix_w_hcmi.csv', index_col=0)
     omics_models_meta = load_file('model_metadata.csv', index_col=0)
-    all_celligner_samples = load_file('celligner_coordinates_w_hcmi_filtered.csv', index_col=0)
+    all_celligner_samples = load_file('celligner_coordinates_w_hcmi.csv', index_col=0)
     
     # partition the celligner table by dataset and model type
 

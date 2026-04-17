@@ -10,8 +10,6 @@ import matplotlib.pyplot as plt
 
 mpl.style.use(os.path.join(ASSETS_DIR, 'stylesheet.mplstyle'))
 
-# figure 3a
-
 def plot_metaprogram_bubble():
     """
     Plot the average metaprogram expression per lineage as a bubble (dot) plot.
@@ -55,10 +53,8 @@ def plot_metaprogram_bubble():
     axs[0].get_legend().remove()
     axs[0].legend(handles = h[6:7] + h[7::2], loc='lower left', bbox_to_anchor=(1, -0.85), prop={'size': ANNOT_SIZE})
 
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_3a_next_gen_vs_2d_metaprogram_expr_diff_bubble.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'next_gen_vs_2d_metaprogram_expr_diff_bubble.pdf'))
     
-# figure 4a
-
 def plot_metaprogram_volcano(mean_difference_threshold=0.5, p_threshold=1e-15):
     """
     Plot the difference in metaprogram expression means between NextGen and Traditional adherent models.
@@ -132,10 +128,8 @@ def plot_metaprogram_volcano(mean_difference_threshold=0.5, p_threshold=1e-15):
                       xlabel, ylabel, (-0.05, 2), ha='center', va='center',
                       arrowprops=dict(arrowstyle='-', color='black', alpha=0, linewidth=0.25, shrinkA=0, shrinkB=0))
 
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_4a_metaprogram_organoid_vs_adherent_volcano.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'metaprogram_organoid_vs_adherent_volcano.pdf'))
     
-# figure 4b
-
 def plot_pdac_distribution_boxplots():
     """
     Plot 1D distributions of PDAC-classical expression across NextGen lineages between Depmap models and lineage-matched TCGA samples.
@@ -303,21 +297,17 @@ def plot_pdac_distribution_boxplots():
 
     plt.legend(loc='lower left', bbox_to_anchor=(0.62, 0.39), ncol=1,
                handlelength=0.75, handletextpad=0.5, columnspacing=2, prop={'size': ANNOT_SIZE})
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_4b_pdac_distributions_dataset_comparison_by_lineage_box.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'pdac_distributions_dataset_comparison_by_lineage_box.pdf'))
     annotated_pdac_scores.rename_axis('SampleID').to_csv(os.path.join(PROCESSED_DIR, 'pdac_score_comparison_by_lineage.csv'))
-    
     
 def main():
     """
     Generate all plots related to metaprogram expression (gene sets from Gavish et al., 2023)
     """
-    # figure 3a
     plot_metaprogram_bubble()
     
-    # figure 4a
     plot_metaprogram_volcano(mean_difference_threshold=0.5, p_threshold=1e-30)
     
-    # figure 4b
     plot_pdac_distribution_boxplots()
 
 if __name__ == "__main__":

@@ -626,9 +626,7 @@ def create_large_oncoprint(cn_transform, hotspot, damaging, mutation_matrix, omi
     )
     
     return full_annotation_table
-    
-# figure ED1a
-    
+        
 def create_screened_oncoprint(cn_transform, hotspot, damaging, mutation_matrix, omics_models_meta, next_gen_screened_models, cell_line_screened_models, genes_to_oncoprint, lineage_order, filetype='pdf'):
     """
     Generate an oncoprint for all screened NextGen models
@@ -636,13 +634,11 @@ def create_screened_oncoprint(cn_transform, hotspot, damaging, mutation_matrix, 
     annotation_table = create_large_oncoprint(cn_transform, hotspot, damaging, mutation_matrix, omics_models_meta, ingroup_models=next_gen_screened_models, outgroup_models=cell_line_screened_models, genes_to_oncoprint=genes_to_oncoprint, lineage_order=lineage_order, figsize=(21, 6))
 
     if filetype == 'pdf':
-        plt.savefig(os.path.join(FIGURE_DIR, 'Fig_ED1a_screened_next_gen_oncoplot.pdf'), bbox_inches='tight')
+        plt.savefig(os.path.join(FIGURE_DIR, 'screened_next_gen_oncoplot.pdf'), bbox_inches='tight')
     if filetype == 'png':
-        plt.savefig(os.path.join(FIGURE_DIR, 'Fig_ED1a_screened_next_gen_oncoplot.png'), bbox_inches='tight')
+        plt.savefig(os.path.join(FIGURE_DIR, 'screened_next_gen_oncoplot.png'), bbox_inches='tight')
     annotation_table.to_csv(os.path.join(PROCESSED_DIR, 'screened_next_gen_oncoplot_annotation_summary.csv'), index=False)
-    
-# figure ED1a
-    
+        
 def create_unscreened_oncoprint(cn_transform, hotspot, damaging, mutation_matrix, omics_models_meta, next_gen_unscreened_models, all_cell_line_models, genes_to_oncoprint, lineage_order, filetype='pdf'):
     """
     Generate an oncoprint for all unscreened NextGen models
@@ -650,9 +646,9 @@ def create_unscreened_oncoprint(cn_transform, hotspot, damaging, mutation_matrix
     annotation_table = create_large_oncoprint(cn_transform, hotspot, damaging, mutation_matrix, omics_models_meta, ingroup_models=next_gen_unscreened_models, outgroup_models=all_cell_line_models, genes_to_oncoprint=genes_to_oncoprint, lineage_order=lineage_order, figsize=(21, 6))
 
     if filetype == 'pdf':
-        plt.savefig(os.path.join(FIGURE_DIR, 'Fig_ED1a_unscreened_next_gen_oncoplot.pdf'), bbox_inches='tight')
+        plt.savefig(os.path.join(FIGURE_DIR, 'unscreened_next_gen_oncoplot.pdf'), bbox_inches='tight')
     elif filetype == 'png':
-        plt.savefig(os.path.join(FIGURE_DIR, 'Fig_ED1a_unscreened_next_gen_oncoplot.png'), bbox_inches='tight')
+        plt.savefig(os.path.join(FIGURE_DIR, 'unscreened_next_gen_oncoplot.png'), bbox_inches='tight')
     annotation_table.to_csv(os.path.join(PROCESSED_DIR, 'unscreened_next_gen_oncoplot_annotation_summary.csv'), index=False)
 
     
@@ -680,7 +676,6 @@ def get_alteration_shell(alteration_matrix, ingroup, outgroup, model_metadata, g
     model_matrix = model_matrix.loc[:, model_matrix.any()]
     return model_matrix, lineage_matrix
     
-# figure 1c
     
 def create_condensed_oncoprint(cn_transform, hotspot, damaging, mutation_matrix, omics_models_meta, genes_to_oncoprint, lineage_order):
     """
@@ -780,7 +775,7 @@ def create_condensed_oncoprint(cn_transform, hotspot, damaging, mutation_matrix,
         handler_map=custom_handler_map
     )
     plt.subplots_adjust(left=0.15, bottom=0.16, top=0.92, right=0.98)
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_1d_condensed_oncoplot.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'condensed_oncoplot.pdf'))
     full_annotation_table.to_csv(os.path.join(PROCESSED_DIR, 'condensed_oncoplot_annotation_summary.csv'), index=False)
 
 
@@ -794,14 +789,11 @@ def main():
     
     lineage_order = omics_models_meta.loc[next_gen_screened_models, 'OncotreeLineage'].value_counts().drop('CNS/Brain').index.tolist() + ['CNS/Brain']
     
-    # figure 1d
     create_condensed_oncoprint(cn_transform, hotspot, damaging, mutation_matrix, omics_models_meta, genes_to_oncoprint, lineage_order)
     
-    # figure ED1a
     lineage_order_with_other = omics_models_meta.loc[next_gen_screened_models, 'OncotreeLineage'].value_counts().drop('CNS/Brain').index.tolist() + ['CNS/Brain', 'Other']
     create_screened_oncoprint(cn_transform, hotspot, damaging, mutation_matrix, omics_models_meta, next_gen_screened_models_other, cell_line_screened_models, genes_to_oncoprint, lineage_order_with_other, filetype='pdf')
 
-    # figure ED1a
     lineage_order_unscreened = omics_models_meta.loc[next_gen_unscreened_models, 'OncotreeLineage'].value_counts().drop('CNS/Brain').index.tolist() + ['CNS/Brain']
     create_unscreened_oncoprint(cn_transform, hotspot, damaging, mutation_matrix, omics_models_meta, next_gen_unscreened_models, all_cell_line_models, genes_to_oncoprint, lineage_order_unscreened, filetype='pdf')
     

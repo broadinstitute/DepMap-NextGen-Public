@@ -27,8 +27,6 @@ def load_data():
     
     return omics_models_meta, screen_metadata, cn, damaging, hotspot, omics_signatures, alteration_frequency_df
 
-# figure 1b
-
 def make_omics_wheels(omics_models_meta):
     """
     Plot pie charts indicating which data modalities for NextGen models are covered by our dataset
@@ -77,10 +75,8 @@ def make_omics_wheels(omics_models_meta):
     axs[2].text(0.5, n_y, f'(n = {crispr_wheel.sum()})', transform=axs[2].transAxes, horizontalalignment='center', verticalalignment='center',
                 fontdict={'size': LABEL_SIZE})
 
-    plt.savefig(os.path.join(FIGURE_DIR, f'Fig_1b_omics_wheels.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, f'omics_wheels.pdf'))
 
-
-# figure 1c
 
 def prepare_paneled_heatmap_axes(figsize=(72 * mm, 30 * mm), 
                                  column_ratios=[1, 1], column_widthspace=0.5,
@@ -310,10 +306,8 @@ def make_alteration_heatmap_panels(alteration_heatmap_df):
     ax_map[1][3][0].add_patch(Rectangle((0, 0), 1, 1, fill=False, edgecolor='red', lw=0.5, clip_on=False))
 
     plt.subplots_adjust(right=0.92, left=0.24, top=0.65, bottom=0.1)
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_1c_prominent_alteration_heatmaps.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'prominent_alteration_heatmaps.pdf'))
     
-
-# ED 1b
 
 def make_omics_summary(mutations, omics_models_meta, screen_metadata, cn, hotspot, damaging, omics_signatures):
     """
@@ -518,7 +512,7 @@ def make_omics_summary(mutations, omics_models_meta, screen_metadata, cn, hotspo
     cbar.ax.yaxis.set_label_position('right')
     cbar.outline.set_linewidth(0.25)
 
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_ED1b_omics_summary.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'omics_summary.pdf'))
     
     
 def main():
@@ -526,13 +520,10 @@ def main():
     Generate all plots related to broad/survey patterns within our dataset.
     """
     omics_models_meta, screen_metadata, cn, damaging, hotspot, omics_signatures, alteration_frequency_df = load_data()
-    # figure 1b
     make_omics_wheels(omics_models_meta.replace({'Lung': 'Other', 'Head and Neck': 'Other'}))
     
-    # figure 1c
     make_alteration_heatmap_panels(alteration_frequency_df)
     
-    # figure ED1b
     mutation_list = ['TP53', 'KRAS', 'CDKN2A', 'PIK3CA', 'BRAF', 'CTNNB1', 'APC', 'RB1', 'TERT', 'PTEN']
     make_omics_summary(mutation_list, omics_models_meta.replace({'Lung': 'Other', 'Head and Neck': 'Other'}), screen_metadata, cn, damaging, hotspot, omics_signatures)
 

@@ -144,8 +144,6 @@ def expand_model_matrix_to_screens(matrix, model_mapping):
         model_mapping.to_frame(), how='inner', left_index=True, right_index=True
     ).set_index(model_mapping.name, drop=True)
 
-#END TODO: deduplicate this section with gene_utils.py
-
 def geneset_min_coverage_similarity(genesets_to_genes_dict, geneset_subset=None):
     """
     Calculates the overlap in genesets relative to size of the smaller set, i.e. how well the larger set provides coverage over the smaller.

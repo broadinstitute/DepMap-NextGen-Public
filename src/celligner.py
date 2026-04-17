@@ -40,8 +40,6 @@ def force_categories(series, category_list):
     series_remapped = series.apply(lambda x: x if x in category_list else 'Other')
     return series_remapped
 
-# figure 1e
-
 def global_celligner(lineages, all_celligner_samples, omics_models_meta, screen_metadata):
     """
     Plot samples from DepMap, TCGA, Met500 onto the same celligner-integrated space
@@ -144,10 +142,8 @@ def global_celligner(lineages, all_celligner_samples, omics_models_meta, screen_
     plt.text(0.06, 0.1, 'UMAP2', fontdict={'fontsize': LABEL_SIZE}, transform=plt.gca().transAxes, horizontalalignment='right')
     plt.text(0.065, -0.01, 'UMAP1', fontdict={'fontsize': LABEL_SIZE}, transform=plt.gca().transAxes)
 
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_1e_celligner_next_gen_tcga_met500_hcmi.pdf'), dpi=1200)
+    plt.savefig(os.path.join(FIGURE_DIR, 'celligner_next_gen_tcga_met500_hcmi.pdf'), dpi=1200)
     
-# figure 4c
-
 def pdac_celligner(all_celligner_samples, omics_models_meta, all_mmp_scores):
     """
     Plot samples from lineages of the gastrointestinal tract, colored by expression of the PDAC-classical program 
@@ -300,9 +296,7 @@ def pdac_celligner(all_celligner_samples, omics_models_meta, all_mmp_scores):
                           linestyle='None', markeredgewidth=0.5, markersize=4, label = 'Colorectal'))
     ax_map[0][0][(2, 0)].legend(handles = handles, loc='lower left', bbox_to_anchor=(-0.09, -0.3), ncol=3, 
                                 handletextpad=-0.3, columnspacing=0.2, prop={'size': ANNOT_SIZE})
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_4c_celligner_gavish_pdac_classical.pdf'), dpi=1200)
-
-# figure 1f
+    plt.savefig(os.path.join(FIGURE_DIR, 'celligner_gavish_pdac_classical.pdf'), dpi=1200)
     
 def celligner_classification(next_gen_lineage_order, celligner_top_nns):
     """
@@ -382,12 +376,10 @@ def celligner_classification(next_gen_lineage_order, celligner_top_nns):
     cbar.ax.set_yticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0], [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], fontdict={'size': ANNOT_SIZE})
     cbar.ax.yaxis.set_label_position('left')
     cbar.outline.set_linewidth(0.25)
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_1f_celligner_classification_confusion_lineage_subset.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'celligner_classification_confusion_lineage_subset.pdf'))
     next_gen_confusion_heatmap.to_csv(os.path.join(PROCESSED_DIR, 'next_gen_celligner_classification_confusion_lineage_subset.csv'))
     adherent_confusion_heatmap.to_csv(os.path.join(PROCESSED_DIR, 'traditional_celligner_classification_confusion_lineage_subset.csv'))
-    
-# figure ED2b
-    
+        
 def celligner_extended_classification(next_gen_lineage_order, celligner_top_nns):
     """
     Plot an extended confusion matrix (more predicted classes than true classes) of lineage classification results 
@@ -484,7 +476,7 @@ def celligner_extended_classification(next_gen_lineage_order, celligner_top_nns)
     cbar.ax.yaxis.set_label_position('left')
     cbar.outline.set_linewidth(0.25)
 
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_ED2b_celligner_classification_full_confusion_comparison.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'celligner_classification_full_confusion_comparison.pdf'))
     next_gen_full_confusion_heatmap.to_csv(os.path.join(PROCESSED_DIR, 'next_gen_celligner_classification_confusion_lineage_full.csv'))
     adherent_full_confusion_heatmap.to_csv(os.path.join(PROCESSED_DIR, 'traditional_celligner_classification_confusion_lineage_full.csv'))
     
@@ -500,20 +492,16 @@ def main():
         (~omics_models_meta['OncotreeLineage'].isin(['Lung', 'Head and Neck', 'Other']))
     ]['OncotreeLineage'].value_counts().index.tolist()
     
-    # figure 1e
     global_celligner(next_gen_screened_lineages, all_celligner_samples, omics_models_meta, screen_metadata)
     
-    # figure 4c
     pdac_celligner(all_celligner_samples, omics_models_meta, all_mmp_scores)
     
     next_gen_lineage_order = [
         'CNS/Brain', 'Esophagus/Stomach', 'Pancreas', 'Colorectal', 
         'Breast', 'Ovary/Fallopian Tube', 'Prostate'
     ]
-    # figure 1f
     celligner_classification(next_gen_lineage_order, celligner_top_nns)\
     
-    # figure ED1c
     celligner_extended_classification(next_gen_lineage_order, celligner_top_nns)
     
 

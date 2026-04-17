@@ -13,8 +13,6 @@ mpl.style.use(os.path.join(ASSETS_DIR, 'stylesheet.mplstyle'))
 
 MANUAL_ANNOTATE = True
 
-# figure 5d
-
 def plot_growth_format_volcano(fdr_threshold=0.05, manual_annotate=MANUAL_ANNOTATE):
     """
     Plot differences in dependency across growth formats
@@ -94,10 +92,8 @@ def plot_growth_format_volcano(fdr_threshold=0.05, manual_annotate=MANUAL_ANNOTA
     else:
         texts = [plt.gca().text(r[xlabel], r[ylabel], i, ha='center', va='center', fontsize=ANNOT_SIZE) for i,r in annots.iterrows()]
     
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_5d_minipool_growth_format_volcano.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'minipool_growth_format_volcano.pdf'))
     
-# figure 5e
-
 def plot_serum_status_volcano(fdr_threshold=0.05, manual_annotate=MANUAL_ANNOTATE):
     """
     Plot differences in dependency across media conditions
@@ -180,9 +176,7 @@ def plot_serum_status_volcano(fdr_threshold=0.05, manual_annotate=MANUAL_ANNOTAT
     else:
         texts = [plt.gca().text(r[xlabel], r[ylabel], i, ha='center', va='center', fontsize=ANNOT_SIZE) for i,r in annots.iterrows()]
 
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_5e_minipool_serum_status_volcano.pdf'))
-
-# figure 5f
+    plt.savefig(os.path.join(FIGURE_DIR, 'minipool_serum_status_volcano.pdf'))
 
 def plot_cross_scatter_plot(manual_annotate=MANUAL_ANNOTATE):
     """
@@ -369,9 +363,8 @@ def plot_cross_scatter_plot(manual_annotate=MANUAL_ANNOTATE):
 
     axs[0].set_ylabel('$\Delta$ Dependency\n(OPAC - RPMI/FBS)', fontdict={'fontsize': LABEL_SIZE}, y=-0.22)
     axs[2].set_xlabel('$\Delta$ Dependency\n(Dome - Plastic)', fontdict={'size': LABEL_SIZE}, x=1.1)
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_5e_minipool_cross_scatter_paneled.pdf'))
+    plt.savefig(os.path.join(FIGURE_DIR, 'minipool_cross_scatter_paneled.pdf'))
     
-# figure 5g
     
 def plot_geneset_variance_scatter(manual_annotate=MANUAL_ANNOTATE):
     """
@@ -449,10 +442,8 @@ def plot_geneset_variance_scatter(manual_annotate=MANUAL_ANNOTATE):
     )
     plt.setp(legend.get_title(), fontsize=ANNOT_SIZE)
 
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_5g_minipool_geneset_variance_scatter.pdf'))
-    
-# figure ED11a
-    
+    plt.savefig(os.path.join(FIGURE_DIR, 'minipool_geneset_variance_scatter.pdf'))
+        
 def plot_minipool_library_composition():
     """
     Make an upset plot showing the membership of genes in the minipool with selected gene sets
@@ -465,7 +456,7 @@ def plot_minipool_library_composition():
         subset_size='count', sort_categories_by='-cardinality', sort_by='cardinality',
         fig=fig, element_size=10
     )
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_ED11a_minipool_library_upsetplot.pdf'), bbox_inches='tight')
+    plt.savefig(os.path.join(FIGURE_DIR, 'minipool_library_upsetplot.pdf'), bbox_inches='tight')
 
 # figure ED11b
 
@@ -535,7 +526,7 @@ def plot_minipool_screen_qc():
 
     plt.legend(title='DepMap ID', handles=cl_qc_patches, loc='lower left', bbox_to_anchor=(1.04, 0.5))
             
-    plt.savefig(os.path.join(FIGURE_DIR, 'Fig_ED11b_minipool_screen_qc.pdf'), bbox_inches='tight')
+    plt.savefig(os.path.join(FIGURE_DIR, 'minipool_screen_qc.pdf'), bbox_inches='tight')
     
 # figure ED11c
 
@@ -801,8 +792,6 @@ def plot_paired_ttest(genes, gene_effect_matrix, grouping_df, figsize=None, p_an
     
     return long_df
 
-# figure ED12a
-
 def plot_growth_paired_t_boxplots(genelist):
     """
     Plot paired t-test results for growth format comparisons
@@ -834,8 +823,6 @@ def plot_growth_paired_t_boxplots(genelist):
     growth_long_df.rename({'gene': 'Gene', 'value': 'DependencyGeneEffect'}, axis=1).loc[
         :, ['cell_line_name', 'Gene', 'DependencyGeneEffect', 'Growth Format', 'Culture medium']
     ].to_csv(os.path.join(PROCESSED_DIR, 'minipool_growth_format_paired_t_table.csv'), index=False)
-
-# figure ED12b
 
 def plot_serum_paired_t_boxplots(genelist):
     """
@@ -870,8 +857,6 @@ def plot_serum_paired_t_boxplots(genelist):
     serum_long_df.rename({'gene': 'Gene', 'value': 'DependencyGeneEffect'}, axis=1).loc[
         :, ['cell_line_name', 'Gene', 'DependencyGeneEffect', 'Growth Format', 'Culture medium']
     ].to_csv(os.path.join(PROCESSED_DIR, 'minipool_serum_status_paired_t_table.csv'), index=False)
-
-# figure ED12c
 
 def plot_minipool_geneset_boxplots_over_growth():
     """
@@ -930,8 +915,6 @@ def plot_minipool_geneset_boxplots_over_growth():
     df.rename({'variable': 'Geneset'}, axis=1).loc[
         :, ['Gene', 'GrowthCoefficient', 'Geneset']
     ].to_csv(os.path.join(PROCESSED_DIR, 'minipool_growth_format_geneset_boxplot_table.csv'), index=False)
-
-# figure ED12d
 
 def plot_geneset_boxplots_over_serum():
     """
@@ -995,39 +978,28 @@ def main():
     """
     Generate all plots related to minipool screens
     """
-    # # figure 5d
     plot_growth_format_volcano(fdr_threshold=0.05, manual_annotate=MANUAL_ANNOTATE)
     
-    # # figure 5e
     plot_serum_status_volcano(fdr_threshold=0.05, manual_annotate=MANUAL_ANNOTATE)
     
-    # # figure 5f
     plot_cross_scatter_plot(manual_annotate=MANUAL_ANNOTATE)
     
-    # # figure 5g
     plot_geneset_variance_scatter(manual_annotate=MANUAL_ANNOTATE)
     
-    # # figure ED11a
     plot_minipool_library_composition()
     
-    # # figure ED11b
     plot_minipool_screen_qc()
     
-    # figure ED11c
     plot_minipool_genomewide_comparison()
     
     genelist = ['ITGB1', 'PTK2', 'ITGA3', 'PRKCA', 'CTNNA1', 'NCKAP1', 'ITGAV', 'SPTLC2', 'SQLE', 'SPTLC1', 'PPP1R15B', 'PPP2R2D', 'RICTOR', 'CDK4', 'GPX4']
     
-    # # figure ED12a
     plot_growth_paired_t_boxplots(genelist)
     
-    # # figure ED12b
     plot_serum_paired_t_boxplots(genelist)
     
-    # # figure ED12c
     plot_minipool_geneset_boxplots_over_growth()
     
-    # # figure ED12d
     plot_geneset_boxplots_over_serum()
 
     

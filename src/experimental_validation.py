@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 
 mpl.style.use(os.path.join(ASSETS_DIR, 'stylesheet.mplstyle'))
 
-# figure 5h
 
 def plot_viability_pointplots(viability_genes):
     """
