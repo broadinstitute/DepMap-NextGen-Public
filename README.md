@@ -69,19 +69,19 @@ ___Main Figures 3d, 3f; Extended Figures 5a, 5d, 6b, 8e-g, 11a, 11c, 12a-c, R9a,
 
 To reproduce analytical results for the above figure panels, run the following R scripts:
 
-    Rscript EDFig5d_cds2d3d_expression_volcano.R
-    Rscript EDFig6b_cnsorg2d3d_dependency_volcano.R
-    Rscript EDFig8e_glial_nextgen_diff_dependency.R
-    Rscript EDFig8f_cdk6dep_mut_association.R
-    Rscript EDFig11a_pdacc_associated_dep_wnt3a.R
-    Rscript Fig3d_glial_mesenchymal_diff_dependency.R
+    Rscript cds2d3d_expression_volcano.R
+    Rscript cnsorg2d3d_dependency_volcano.R
+    Rscript glial_nextgen_diff_dependency.R
+    Rscript cdk6dep_mut_association.R
+    Rscript pdacc_associated_dep_wnt3a.R
+    Rscript glial_mesenchymal_diff_dependency.R
 
 To produce figures, run the following scripts
 
-    Rscript EDFig5a_cns2d3d_expression_dendrogram.R
-    Rscript EDFig8g_cdk6dep_cn_association_glial.R
-    Rscript EDFig11c_wnt_dependency_mut_association.R
-    Rscript EDFig12ac_2d3d_onctsg_dependency.R
-    Rscript Fig3f_cdk6dep_cn_association.R
-    Rscript FigR9a_depmap_han_2d3d_screens.R
-    Rscript FigR13d_cdk6dep_cdkn2acn_per_lineage.R
+    Rscript cns2d3d_expression_dendrogram.R
+    Rscript cdk6dep_cn_association_glial.R
+    Rscript wnt_dependency_mut_association.R
+    Rscript 2d3d_onctsg_dependency.R
+    Rscript cdk6dep_cn_association.R
+    Rscript depmap_han_2d3d_screens.R
+    Rscript cdk6dep_cdkn2acn_per_lineage.R
