@@ -48,7 +48,7 @@ Below is a manifest of files included in this directory.
 - `cns2d3d_expression_dendrogram.R`: Clusters model gene expression across growth formats
 - `cds2d3d_expression_volcano.R`: Plots differential model gene expression across growth formats
 - `cnsorg2d3d_dependency_volcano.R`: Computes differential dependencies across growth formats for CNS models
-- `EDFig8e_glial_nextgen_diff_dependency.R`: Computes differential dependencies between glial GBMs and other NextGen models
+- `glial_nextgen_diff_dependency.R`: Computes differential dependencies between glial GBMs and other NextGen models
 - `cdk6dep_mut_association.R`: Computes CDK6 dependency associations with genomic alterations
 - `cdk6dep_cn_association_glial.R`: Plots correlations between CDK6 dependency and copy number alterations in glial models
 - `glial_mesenchymal_diff_dependency.R`: Computes differential dependency between glial and mesenchymal GBM models
