@@ -139,7 +139,7 @@ def plot_pdac_distribution_boxplots():
     all_celligner_samples = load_file('celligner_coordinates_w_hcmi.csv', index_col=0).replace(lineage_replacement)
     # lineages_to_show = ['Pancreas', 'Esophagus/Stomach', 'Bowel', 'Prostate', 'Breast', 'Ovary/Fallopian Tube']
     lineages_to_show = ['Pancreas', 'Esophagus/Stomach', 'Colorectal', 'Prostate', 'Breast', 'Ovary/Fallopian Tube', 'All Organoid Lineages']
-    all_organoid_lineages = ['Esophagus/Stomach', 'Pancreas', 'Biliary Tract', 'CNS/Brain', 'Breast', 
+    all_organoid_lineages = ['Esophagus/Stomach', 'Pancreas', 'Biliary Tract', 'Breast', 
                              'Colorectal', 'Bowel', 'Prostate', 'Ovary/Fallopian Tube', 'Ampulla of Vater', 'Uterus']
 
     # all expression scores per lineage, annotated by their respective lineages
