@@ -4,8 +4,8 @@ OUTPUT_PATH = file.path("..", "processed")
 library(stats)
 
 PDACc_Chronos_wnt3a<-read.csv(file.path(INPUT_PATH, "PDACc_Chronos_wnt3a.csv"), check.names = FALSE)
-wnt3a_set <- read.csv(file.path(INPUT_PATH, "GOBP_WNT_SIGNALING_PATHWAY.v2026.1.Hs.tsv"), sep='\t')
-wnt3a_genes <- unlist(strsplit(wnt3a_set[17, 'GOBP_WNT_SIGNALING_PATHWAY'], ','))
+all_genesets <- read.csv(file.path(INPUT_PATH, "geneset_table_updated.csv"))
+wnt3a_genes <- all_genesets[all_genesets$Geneset == "GOBP_WNT_SIGNALING_PATHWAY", "GeneSymbol"]
 
 if (file.exists(file.path(OUTPUT_PATH, "PDACc_associated_dep_wnt3a.csv"))) {file.remove(file.path(OUTPUT_PATH, "PDACc_associated_dep_wnt3a.csv"))}
 
