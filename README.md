@@ -26,7 +26,7 @@ The R environment used in Section 3 uses R version 4.4.3, with the following add
 
 ## Setup and data acquisition:
 
-Clone this repository, and download the contents of the dataset entitled "NextGen Model Manuscript 2026" in the DepMap Portal into the `data` directory. This dataset can be accessed at [https://depmap.org/portal/data_page/?tab=allData](https://depmap.org/portal/data_page/?tab=allData) by selecting the appropriate file set name from the dropdown menu. The files necessary for running the scripts in this repository will populate the page, where they are available for download.
+Clone this repository, and download the contents of the dataset entitled "NextGen Model Manuscript 2026" in the DepMap Portal into the `data` directory. This dataset can be accessed at [https://depmap.org/portal/data_page/?tab=allData](https://depmap.org/portal/data_page/?tab=allData) by selecting the appropriate file set name from the dropdown menu. The files necessary for running the scripts in this repository will populate the page, where they will be available for download.
 
 The below sections will reproduce the files deposited in `processed`.
 
