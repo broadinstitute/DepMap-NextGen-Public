@@ -32,7 +32,7 @@ The below sections will reproduce the files deposited in `processed`.
 
 ## Section 1 (python)
 
-___Main Figures 1b-g, 1i, 2a-h, 3a, 4a-f, 5a-b, 5d-h; Extended Figures 1-c, 6f, 10e, 11a-c, 12a-d___
+___Main Figures 1b-g, 1i, 2a-h, 3a, 4a-f, 5a-b, 5d-h; Extended Data Figures 2b, 8h, 9a-g___
 
 To reproduce analytical results for the above figure panels, run the following code (runtime ~20 minutes): ```poetry run python src/generate.py```
 
@@ -56,16 +56,16 @@ The generation step will populate the `processed` directory with `.csv` files, w
 
 ## Section 2 (R)
 
-___Main Figures 3b-d; Extended Figure 6___
+___Main Figures 3b, 3c; Extended Data Figure 6b, 6c___
 To reproduce analytical results for the above figure panels, run the following R scripts:
 
-    Rscript Fig3bc_EDFig6ab_GBM_celligner_transcriptional_analysis.R
-    Rscript Fig3d_EDFig6c_GBM_GSEA.R
+    Rscript GBM_celligner_transcriptional_analysis.R
+    Rscript GBM_GSEA.R
     
 
 ## Section 3 (R)
 
-___Main Figures 3d, 3f; Extended Figures 5a, 5d, 6b, 8e-g, 11a, 11c, 12a-c, R9a, R13d___ 
+___Main Figures 3d, 3f; Extended Data Figures 4c, 4f, 4h, 6e-g, 7i, 7k, 8d, 8f; Rebuttal Figures R9a, R13d___ 
 
 To reproduce analytical results for the above figure panels, run the following R scripts:
 
